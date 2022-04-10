@@ -156,6 +156,28 @@ public class Server implements Runnable {
 			          }		
 					
 				}
+
+				else if(message.startsWith("/cmd showPerms")) {
+					OutputStream pos = client.getOutputStream();
+			        OutputStreamWriter posw = new OutputStreamWriter(pos);
+			        BufferedWriter pibw = new BufferedWriter(posw);
+			        
+					if(nickname.equals("kosovo") && ipOfkosovo.equals(client.getRemoteSocketAddress().toString())){
+						 pibw.write("Your permissions : \n");
+						 pibw.write("> Get file info    (  /cmd readFile fileName   )\n");
+					     pibw.write("> Read file   	   (  /cmd readFile fileName   )\n");
+					     pibw.write("> Write file       (  /cmd writeFile fileName  )\n");
+					     pibw.write("> Create file      (  /cmd createFile fileName )\n");
+					     pibw.write("> Delete file      (  /cmd deleteFile fileName )\n");
+					     pibw.flush();
+					}
+					else {
+						pibw.write("Your permissions : \n");
+						pibw.write("> Read file   	    (  /cmd readFile fileName   )\n");
+						pibw.flush();
+					}
+					
+				}
 				
 				else if(message.startsWith("/cmd getFileInfo")) {
 					
@@ -250,7 +272,6 @@ public class Server implements Runnable {
 			            }
 			          } catch (IOException e) {
 			            System.out.println("An error occurred.");
-			            e.printStackTrace();
 			          }
 			        }else {
 			        	cbw.write("You dont have permission \n");
@@ -315,7 +336,7 @@ public class Server implements Runnable {
 					
 				}
 				else {
-					broadcast(nickname + ": " + message);
+					broadcast("\n" + nickname + ": " + message +"\n");
 				}
 			}
 			
